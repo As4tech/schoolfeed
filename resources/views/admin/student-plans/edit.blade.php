@@ -1,0 +1,65 @@
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Edit Plan Assignment') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-medium">Edit Plan for {{ $student->full_name }}</h3>
+                        <p class="text-sm text-gray-600">Plan: {{ $studentPlan->name }} | Started: {{ $studentPlan->pivot->start_date->format('M d, Y') }}</p>
+                    </div>
+
+                    <form action="{{ route('admin.students.plans.update', [$student, $studentPlan->pivot->id]) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="status" class="block text-sm font-medium text-gray-700">Status *</label>
+                                <select name="status" id="status" required
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                    <option value="active" {{ old('status', $studentPlan->pivot->status) == 'active' ? 'selected' : '' }}>Active</option>
+                                    <option value="completed" {{ old('status', $studentPlan->pivot->status) == 'completed' ? 'selected' : '' }}>Completed</option>
+                                    <option value="cancelled" {{ old('status', $studentPlan->pivot->status) == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
+                                </select>
+                                @error('status')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div>
+                                <label for="amount_paid" class="block text-sm font-medium text-gray-700">Amount Paid</label>
+                                <input type="number" name="amount_paid" id="amount_paid" value="{{ old('amount_paid', $studentPlan->pivot->amount_paid) }}" step="0.01" min="0"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                @error('amount_paid')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <label for="notes" class="block text-sm font-medium text-gray-700">Notes</label>
+                                <textarea name="notes" id="notes" rows="2"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">{{ old('notes', $studentPlan->pivot->notes) }}</textarea>
+                                @error('notes')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="mt-6 flex items-center justify-end gap-4">
+                            <a href="{{ route('admin.students.show', $student) }}" class="text-gray-600 hover:text-gray-900">Cancel</a>
+                            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                                Update Assignment
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
