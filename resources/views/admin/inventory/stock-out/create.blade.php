@@ -29,6 +29,7 @@
                             <label class="block text-sm font-medium text-gray-700">Reason *</label>
                             <select name="reason" class="mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
                                 <option value="cooking" {{ old('reason')==='cooking'?'selected':'' }}>Cooking</option>
+                                <option value="expired" {{ old('reason')==='expired'?'selected':'' }}>Expired</option>
                                 <option value="wastage" {{ old('reason')==='wastage'?'selected':'' }}>Wastage</option>
                             </select>
                             @error('reason')<p class="text-sm text-red-600 mt-1">{{ $message }}</p>@enderror

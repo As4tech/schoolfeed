@@ -83,7 +83,7 @@ class ReportsController extends Controller
             'completed' => $payments->where('status', 'completed')->count(),
             'pending' => $payments->where('status', 'pending')->count(),
             'failed' => $payments->where('status', 'failed')->count(),
-            'total_amount' => $payments->where('status', 'completed')->sum('total_amount'),
+            'total_amount' => $payments->where('status', 'completed')->sum('school_amount'),
             'platform_fees' => $payments->where('status', 'completed')->sum('platform_fee'),
             'school_amount' => $payments->where('status', 'completed')->sum('school_amount'),
         ];
@@ -92,7 +92,7 @@ class ReportsController extends Controller
             ->groupBy(fn($p) => $p->created_at->format('Y-m-d'))
             ->map(fn($day) => [
                 'count' => $day->count(),
-                'amount' => $day->sum('total_amount'),
+                'amount' => $day->sum('school_amount'),
             ]);
 
         $classes = $this->getClasses($schoolId);

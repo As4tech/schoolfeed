@@ -950,10 +950,10 @@
 <section class="cta-section">
     <div class="cta-card">
         <h2 class="cta-title">Ready to modernise your<br>school canteen?</h2>
-        <p class="cta-sub">Join schools across Nigeria using SchoolFeed to save time, reduce waste, and keep parents informed.</p>
+        <p class="cta-sub">Join schools across Ghana using SchoolFeed to save time, reduce waste, and keep parents informed.</p>
         <div class="cta-actions">
             <a href="/register-school" class="btn-primary">Register your school — it's free</a>
-            <a href="https://wa.me/2348012345678?text=Hello%20SchoolFeed%20Team%2C%20I%27d%20like%20to%20learn%20more." target="_blank" rel="noopener" class="btn-secondary">Chat with us on WhatsApp</a>
+            <a href="https://wa.me/233246166303?text=Hello%20SchoolFeed%20Team%2C%20I%27d%20like%20to%20learn%20more." target="_blank" rel="noopener" class="btn-secondary">Chat with us on WhatsApp</a>
         </div>
     </div>
 </section>

@@ -129,7 +129,7 @@
                                             {{ $payment->status_label }}
                                         </span>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right">GH₵{{ number_format($payment->total_amount, 2) }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right">GH₵{{ number_format($payment->school_amount, 2) }}</td>
                                 </tr>
                             @empty
                                 <tr>

@@ -99,8 +99,8 @@
                                                id="meal_{{ $dayKey }}"
                                                class="meal-checkbox h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                                                data-day="{{ $dayKey }}"
-                                               value="{{ $weeklySchedules[$dayKey]->first()->id ?? '' }}"
-                                               data-price="{{ $weeklySchedules[$dayKey]->first()->price ?? 0 }}"
+                                               value="{{ isset($weeklySchedules[$dayKey]) ? $weeklySchedules[$dayKey]->first()->id : '' }}"
+                                               data-price="{{ isset($weeklySchedules[$dayKey]) ? $weeklySchedules[$dayKey]->first()->price : 0 }}"
                                                {{ isset($existingSelections[$children->first()->id . '_' . $dayKey]) ? 'checked' : '' }}>
                                         <label for="meal_{{ $dayKey }}" class="ml-3 flex-1 cursor-pointer">
                                             <div class="flex justify-between items-center">

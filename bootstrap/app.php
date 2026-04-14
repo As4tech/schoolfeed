@@ -19,8 +19,28 @@ return Application::configure(basePath: dirname(__DIR__))
                     ->name('password.update');
             });
 
+            // Super Admin login route (no tenant context)
+            Route::prefix('super-admin')
+                ->middleware(['web'])
+                ->group(function () {
+                    Route::get('login', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'create'])
+                        ->name('superadmin.login');
+                    Route::post('login', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'store'])
+                        ->name('superadmin.login.store');
+                    
+                    // Password reset routes
+                    Route::get('forgot-password', [\App\Http\Controllers\Auth\PasswordResetLinkController::class, 'create'])
+                        ->name('superadmin.password.request');
+                    Route::post('forgot-password', [\App\Http\Controllers\Auth\PasswordResetLinkController::class, 'store'])
+                        ->name('superadmin.password.email');
+                    Route::get('reset-password/{token}', [\App\Http\Controllers\Auth\NewPasswordController::class, 'create'])
+                        ->name('superadmin.password.reset');
+                    Route::post('reset-password', [\App\Http\Controllers\Auth\NewPasswordController::class, 'store'])
+                        ->name('superadmin.password.update');
+                });
+
             // Global Super Admin routes (no tenant slug required) - REGISTER FIRST
-            Route::prefix('admin')
+            Route::prefix('super-admin')
                 ->middleware(['web', 'auth', 'role:Super Admin'])
                 ->name('superadmin.')
                 ->group(function () {
@@ -86,7 +106,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
             // Admin routes under school slug context
             Route::prefix('{school:slug}')
-                ->middleware(['web', 'school.context', 'auth'])
+                ->middleware(['web', 'school.context', 'auth', \Illuminate\Routing\Middleware\SubstituteBindings::class])
                 ->name('admin.')
                 ->group(function () {
                     Route::prefix('admin')->group(base_path('routes/admin.php'));
@@ -104,6 +124,14 @@ return Application::configure(basePath: dirname(__DIR__))
         
         // Use custom Authenticate middleware for proper tenant login redirects
         $middleware->replace(\Illuminate\Auth\Middleware\Authenticate::class, \App\Http\Middleware\Authenticate::class);
+        
+        // Override default guest redirect to handle school context
+        $middleware->redirectGuestsTo(function ($request) {
+            if ($request->route('school')) {
+                return '/' . $request->route('school') . '/login';
+            }
+            return '/';
+        });
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

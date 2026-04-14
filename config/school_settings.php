@@ -44,6 +44,12 @@ return [
                 'label' => 'Address',
                 'description' => 'School physical address',
             ],
+            'currency' => [
+                'value' => 'GHS',
+                'type' => 'string',
+                'label' => 'Currency',
+                'description' => 'Default currency for payments and pricing',
+            ],
         ],
 
         // Payment Settings
@@ -76,10 +82,10 @@ return [
         // Feeding Settings
         'feeding' => [
             'default_feeding_fee' => [
-                'value' => 5000,
+                'value' => 40,
                 'type' => 'integer',
                 'label' => 'Default Feeding Fee',
-                'description' => 'Default amount for feeding plans',
+                'description' => 'Default amount for feeding plans (in GHS)',
             ],
             'feeding_type' => [
                 'value' => 'daily',

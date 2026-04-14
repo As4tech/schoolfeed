@@ -36,7 +36,6 @@
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Guardian</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Students</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Amount</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Platform Fee</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
@@ -48,8 +47,7 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $payment->reference }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $payment->guardian->name }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $payment->items->count() }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">GH₵{{ number_format($payment->total_amount, 2) }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">GH₵{{ number_format($payment->platform_fee, 2) }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">GH₵{{ number_format($payment->school_amount, 2) }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-{{ $payment->status_color }}-100 text-{{ $payment->status_color }}-800">
                                                 {{ $payment->status_label }}
@@ -57,20 +55,20 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $payment->created_at->format('M d, Y') }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <a href="{{ route('admin.payments.show', $payment) }}" class="text-blue-600 hover:text-blue-900 mr-3 inline-flex items-center justify-center w-8 h-8" title="View">
+                                            <a href="{{ route('admin.payments.show', ['school' => request()->route('school'), 'payment' => $payment]) }}" class="text-blue-600 hover:text-blue-900 mr-3 inline-flex items-center justify-center w-8 h-8" title="View">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                                                 </svg>
                                             </a>
                                             @if($payment->status === 'pending')
-                                                <a href="{{ route('admin.payments.edit', $payment) }}" class="text-indigo-600 hover:text-indigo-900 mr-3 inline-flex items-center justify-center w-8 h-8" title="Edit">
+                                                <a href="{{ route('admin.payments.edit', ['school' => request()->route('school'), 'payment' => $payment]) }}" class="text-indigo-600 hover:text-indigo-900 mr-3 inline-flex items-center justify-center w-8 h-8" title="Edit">
                                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                                     </svg>
                                                 </a>
                                             @endif
-                                            <form action="{{ route('admin.payments.destroy', $payment) }}" method="POST" class="inline">
+                                            <form action="{{ route('admin.payments.destroy', ['school' => request()->route('school'), 'payment' => $payment]) }}" method="POST" class="inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="text-red-600 hover:text-red-900 inline-flex items-center justify-center w-8 h-8" title="Delete" onclick="return confirm('Are you sure?')">
@@ -83,7 +81,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="8" class="px-6 py-4 text-center text-gray-500">No payments found.</td>
+                                        <td colspan="7" class="px-6 py-4 text-center text-gray-500">No payments found.</td>
                                     </tr>
                                 @endforelse
                             </tbody>

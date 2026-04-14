@@ -7,7 +7,7 @@
     <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm rounded-lg">
             <div class="p-6">
-                <form action="{{ route('admin.inventory.items.update', $item) }}" method="POST" class="space-y-5">
+                <form action="{{ route('admin.inventory.items.update', ['school' => request()->route('school'), 'item' => $item]) }}" method="POST" class="space-y-5">
                     @csrf
                     @method('PUT')
                     <div>

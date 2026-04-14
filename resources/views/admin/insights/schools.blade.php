@@ -59,7 +59,6 @@
                 </div>
                 <div class="insights-header-text">
                     <h2>{{ __('Insights') }}</h2>
-                    <p>Meal payment analytics by school</p>
                 </div>
             </div>
             <span class="insights-live-badge">Live</span>

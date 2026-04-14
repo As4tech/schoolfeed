@@ -10,20 +10,15 @@ return new class extends Migration
 {
     public function up(): void
     {
-        // Create the manage settings permission
-        $permission = Permission::create([
-            'name' => 'manage settings',
-            'guard_name' => 'web'
-        ]);
+        $permission = Permission::firstOrCreate(['name' => 'manage settings']);
 
-        // Assign permission to School Admin role
-        $schoolAdminRole = Role::where('name', 'School Admin')->where('guard_name', 'web')->first();
+        $schoolAdminRole = Role::where('name', 'School Admin')->first();
+        $superAdminRole = Role::where('name', 'Super Admin')->first();
+
         if ($schoolAdminRole) {
             $schoolAdminRole->givePermissionTo($permission);
         }
 
-        // Also assign to Super Admin role
-        $superAdminRole = Role::where('name', 'Super Admin')->where('guard_name', 'web')->first();
         if ($superAdminRole) {
             $superAdminRole->givePermissionTo($permission);
         }

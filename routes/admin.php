@@ -181,7 +181,7 @@ Route::middleware(['role:Parent|Super Admin'])->group(function () {
 
     // Make payment
     Route::get('/make-payment', [PaymentController::class, 'create'])
-        ->name('payments.create');
+        ->name('make-payment');
 });
 
 // Permission-based routes (more granular control)

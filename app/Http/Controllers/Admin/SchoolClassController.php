@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\School;
 use App\Models\SchoolClass;
 use Illuminate\Http\Request;
 
@@ -40,10 +41,10 @@ class SchoolClassController extends Controller
             'is_active' => $request->boolean('is_active', true),
         ]);
 
-        return redirect()->route('admin.classes.index')->with('success', 'Class created successfully.');
+        return redirect()->route('admin.classes.index', ['school' => $school])->with('success', 'Class created successfully.');
     }
 
-    public function edit(SchoolClass $class)
+    public function edit(School $school, SchoolClass $class)
     {
         $user = auth()->user();
         if (!$user->hasRole('Super Admin') && $class->school_id !== $user->school_id) {
@@ -52,7 +53,7 @@ class SchoolClassController extends Controller
         return view('admin.classes.edit', compact('class'));
     }
 
-    public function update(Request $request, SchoolClass $class)
+    public function update(Request $request, School $school, SchoolClass $class)
     {
         $user = auth()->user();
         if (!$user->hasRole('Super Admin') && $class->school_id !== $user->school_id) {
@@ -69,16 +70,16 @@ class SchoolClassController extends Controller
             'is_active' => $request->boolean('is_active', true),
         ]);
 
-        return redirect()->route('admin.classes.index')->with('success', 'Class updated successfully.');
+        return redirect()->route('admin.classes.index', ['school' => $school])->with('success', 'Class updated successfully.');
     }
 
-    public function destroy(SchoolClass $class)
+    public function destroy(School $school, SchoolClass $class)
     {
         $user = auth()->user();
         if (!$user->hasRole('Super Admin') && $class->school_id !== $user->school_id) {
             abort(403);
         }
         $class->delete();
-        return redirect()->route('admin.classes.index')->with('success', 'Class deleted successfully.');
+        return redirect()->route('admin.classes.index', ['school' => $school])->with('success', 'Class deleted successfully.');
     }
 }

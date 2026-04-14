@@ -9,11 +9,23 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Str;
 
 #[ScopedBy([SchoolScope::class])]
 class Student extends Model
 {
     use HasFactory;
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($student) {
+            if (empty($student->student_id)) {
+                $student->student_id = $student->generateStudentId();
+            }
+        });
+    }
 
     protected $fillable = [
         'school_id',
@@ -73,5 +85,27 @@ class Student extends Model
     public function getFullNameAttribute(): string
     {
         return "{$this->first_name} {$this->last_name}";
+    }
+
+    /**
+     * Generate a unique student ID
+     * 
+     * @return string
+     */
+    public function generateStudentId(): string
+    {
+        // Get school prefix or use default
+        $schoolPrefix = $this->school_id ? 'STU' : 'STU';
+        
+        // Get current year
+        $year = date('Y');
+        
+        // Generate a random 4-digit number
+        do {
+            $randomNumber = str_pad(mt_rand(1, 9999), 4, '0', STR_PAD_LEFT);
+            $studentId = "{$year}/{$schoolPrefix}/{$randomNumber}";
+        } while (self::where('student_id', $studentId)->exists());
+        
+        return $studentId;
     }
 }

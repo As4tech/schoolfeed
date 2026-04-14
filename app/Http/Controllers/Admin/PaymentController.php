@@ -190,18 +190,18 @@ class PaymentController extends Controller
         return view('payments.success', compact('payment'));
     }
 
-    public function show(Payment $payment)
+    public function show($school, Payment $payment)
     {
         $payment->load(['guardian', 'items.student', 'school']);
         
         return view('admin.payments.show', compact('payment'));
     }
 
-    public function edit(Payment $payment)
+    public function edit($school, Payment $payment)
     {
         // Only allow editing pending payments
         if ($payment->status !== 'pending') {
-            return redirect()->route('admin.payments.show', $payment)
+            return redirect()->route('admin.payments.show', ['school' => $school, 'payment' => $payment])
                 ->with('error', 'Only pending payments can be edited.');
         }
         
@@ -211,10 +211,10 @@ class PaymentController extends Controller
         return view('admin.payments.edit', compact('payment', 'guardians', 'students'));
     }
 
-    public function update(Request $request, Payment $payment)
+    public function update(Request $request, $school, Payment $payment)
     {
         if ($payment->status !== 'pending') {
-            return redirect()->route('admin.payments.show', $payment)
+            return redirect()->route('admin.payments.show', ['school' => $school, 'payment' => $payment])
                 ->with('error', 'Only pending payments can be updated.');
         }
 
@@ -226,11 +226,11 @@ class PaymentController extends Controller
 
         $payment->update($validated);
 
-        return redirect()->route('admin.payments.show', $payment)
+        return redirect()->route('admin.payments.show', ['school' => $school, 'payment' => $payment])
             ->with('success', 'Payment updated successfully.');
     }
 
-    public function destroy(Payment $payment)
+    public function destroy($school, Payment $payment)
     {
         // Delete related items first
         $payment->items()->delete();

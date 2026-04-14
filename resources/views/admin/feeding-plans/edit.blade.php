@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
-                    <form action="{{ route('admin.feeding-plans.update', $feedingPlan) }}" method="POST">
+                    <form action="{{ route('admin.feeding-plans.update', ['school' => request()->route('school'), 'feeding_plan' => $feedingPlan]) }}" method="POST">
                         @csrf
                         @method('PUT')
 

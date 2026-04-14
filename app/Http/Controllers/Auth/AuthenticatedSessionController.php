@@ -28,11 +28,24 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        // Check if this is a super-admin login (no school context)
+        if (auth()->user()->hasRole('Super Admin') && !request()->route('school')) {
+            return redirect()->intended(route('superadmin.dashboard', absolute: false));
+        }
+
         // For parents, redirect to their tenant-scoped dashboard
         if (auth()->user()->hasRole('Parent') && auth()->user()->guardian_id) {
             $guardian = \App\Models\Guardian::find(auth()->user()->guardian_id);
             if ($guardian && $guardian->school) {
                 return redirect()->intended(route('dashboard', ['school' => $guardian->school->slug], absolute: false));
+            }
+        }
+
+        // For school admins and other roles, redirect to school dashboard
+        if (auth()->user()->school_id) {
+            $school = \App\Models\School::find(auth()->user()->school_id);
+            if ($school) {
+                return redirect()->intended(route('dashboard', ['school' => $school->slug], absolute: false));
             }
         }
 

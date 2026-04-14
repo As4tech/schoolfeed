@@ -52,12 +52,12 @@ class MealController extends Controller
             ->with('success', 'Meal created successfully.');
     }
 
-    public function show(Meal $meal)
+    public function show($school, Meal $meal)
     {
         return view('admin.meals.show', compact('meal'));
     }
 
-    public function edit(Meal $meal)
+    public function edit($school, Meal $meal)
     {
         $user = Auth::user();
         $schools = $user->hasRole('Super Admin') ? School::all() : collect([$user->school]);
@@ -65,7 +65,7 @@ class MealController extends Controller
         return view('admin.meals.edit', compact('meal', 'schools'));
     }
 
-    public function update(Request $request, Meal $meal)
+    public function update(Request $request, $school, Meal $meal)
     {
         $validated = $request->validate([
             'school_id' => 'required|exists:schools,id',
@@ -85,7 +85,7 @@ class MealController extends Controller
             ->with('success', 'Meal updated successfully.');
     }
 
-    public function destroy(Meal $meal)
+    public function destroy($school, Meal $meal)
     {
         $meal->delete();
 

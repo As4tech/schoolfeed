@@ -46,7 +46,7 @@ class FeedingPlan extends Model
 
     public function getFormattedPriceAttribute(): string
     {
-        return '$' . number_format($this->price, 2);
+        return 'GH₵' . number_format($this->price, 2);
     }
 
     public function getTypeLabelAttribute(): string

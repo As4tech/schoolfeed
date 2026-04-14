@@ -126,6 +126,22 @@
                                     <p class="mt-1 text-sm text-gray-500">{{ $generalSettings['address']['description'] }}</p>
                                 </div>
 
+                                <!-- Currency -->
+                                <div>
+                                    <label for="general_currency" class="block text-sm font-medium text-gray-700">
+                                        {{ $generalSettings['currency']['label'] }}
+                                    </label>
+                                    <select id="general_currency" name="general[currency]" 
+                                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                        <option value="GHS" {{ $generalSettings['currency']['value'] === 'GHS' ? 'selected' : '' }}>GHS - Ghana Cedi</option>
+                                        <option value="USD" {{ $generalSettings['currency']['value'] === 'USD' ? 'selected' : '' }}>USD - US Dollar</option>
+                                        <option value="NGN" {{ $generalSettings['currency']['value'] === 'NGN' ? 'selected' : '' }}>NGN - Nigerian Naira</option>
+                                        <option value="EUR" {{ $generalSettings['currency']['value'] === 'EUR' ? 'selected' : '' }}>EUR - Euro</option>
+                                        <option value="GBP" {{ $generalSettings['currency']['value'] === 'GBP' ? 'selected' : '' }}>GBP - British Pound</option>
+                                    </select>
+                                    <p class="mt-1 text-sm text-gray-500">{{ $generalSettings['currency']['description'] }}</p>
+                                </div>
+
                                 <!-- Save Button -->
                                 <div class="flex justify-end pt-4 border-t border-gray-200">
                                     <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
@@ -216,12 +232,12 @@
                                     </label>
                                     <div class="mt-1 relative rounded-md shadow-sm">
                                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                            <span class="text-gray-500 sm:text-sm">₦</span>
+                                            <span class="text-gray-500 sm:text-sm">GHS </span>
                                         </div>
                                         <input type="number" id="feeding_default_feeding_fee" name="feeding[default_feeding_fee]" 
                                                value="{{ $feedingSettings['default_feeding_fee']['value'] }}"
                                                min="0"
-                                               class="block w-full pl-7 pr-12 rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                               class="block w-full pl-12 pr-12 rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                                     </div>
                                     <p class="mt-1 text-sm text-gray-500">{{ $feedingSettings['default_feeding_fee']['description'] }}</p>
                                 </div>

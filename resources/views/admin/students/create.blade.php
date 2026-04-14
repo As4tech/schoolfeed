@@ -31,15 +31,7 @@
                                 @enderror
                             </div>
 
-                            <div>
-                                <label for="student_id" class="block text-sm font-medium text-gray-700">Student ID *</label>
-                                <input type="text" name="student_id" id="student_id" value="{{ old('student_id') }}" required
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                                @error('student_id')
-                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
-
+                            
                             <div>
                                 <label for="class_id" class="block text-sm font-medium text-gray-700">Class *</label>
                                 <select name="class_id" id="class_id" required

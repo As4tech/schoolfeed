@@ -87,7 +87,6 @@ class StudentController extends Controller
         $validated = $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'student_id' => 'required|string|unique:students|max:50',
             'class_id' => 'required|exists:school_classes,id',
             'grade' => 'nullable|string|max:50',
             'date_of_birth' => 'nullable|date',
@@ -128,7 +127,6 @@ class StudentController extends Controller
             'school_id' => auth()->user()->school_id,
             'first_name' => $validated['first_name'],
             'last_name' => $validated['last_name'],
-            'student_id' => $validated['student_id'],
             'class_id' => $schoolClass->id,
             // Backward-compat: copy class name into grade field for existing lists
             'grade' => $schoolClass->name,

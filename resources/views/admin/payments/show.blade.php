@@ -64,16 +64,8 @@
                             </tbody>
                             <tfoot class="bg-gray-50">
                                 <tr>
-                                    <td colspan="2" class="px-6 py-3 text-right text-sm font-medium text-gray-900">Feeding Total:</td>
-                                    <td class="px-6 py-3 text-right text-sm font-bold text-gray-900">GH₵{{ number_format($payment->school_amount, 2) }}</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" class="px-6 py-3 text-right text-sm font-medium text-orange-600">Platform Fee (1%):</td>
-                                    <td class="px-6 py-3 text-right text-sm font-bold text-orange-600">GH₵{{ number_format($payment->platform_fee, 2) }}</td>
-                                </tr>
-                                <tr>
                                     <td colspan="2" class="px-6 py-3 text-right text-lg font-bold text-gray-900">Total Amount:</td>
-                                    <td class="px-6 py-3 text-right text-lg font-bold text-green-600">GH₵{{ number_format($payment->total_amount, 2) }}</td>
+                                    <td class="px-6 py-3 text-right text-lg font-bold text-green-600">GH₵{{ number_format($payment->school_amount, 2) }}</td>
                                 </tr>
                             </tfoot>
                         </table>

@@ -81,7 +81,6 @@
                             <tr>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Class</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">School</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Guardian</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Plan</th>
@@ -92,13 +91,12 @@
                             @forelse($unpaidStudents as $student)
                                 @php
                                     $lastPlan = $student->feedingPlans->sortByDesc('pivot.end_date')->first();
-                                    $expiryDate = $lastPlan ? $lastPlan->pivot->end_date : null;
+                                    $expiryDate = $lastPlan ? \Carbon\Carbon::parse($lastPlan->pivot->end_date) : null;
                                     $daysUnpaid = $expiryDate ? now()->diffInDays($expiryDate) : null;
                                 @endphp
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $student->full_name }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $student->grade }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $student->school->name }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $student->guardian->name ?? 'N/A' }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         {{ $student->guardian->phone ?? 'N/A' }}<br>
@@ -120,7 +118,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7" class="px-6 py-4 text-center text-gray-500">No unpaid students found.</td>
+                                    <td colspan="6" class="px-6 py-4 text-center text-gray-500">No unpaid students found.</td>
                                 </tr>
                             @endforelse
                         </tbody>

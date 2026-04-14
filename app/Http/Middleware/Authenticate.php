@@ -18,7 +18,8 @@ class Authenticate extends Middleware
             return '/' . $request->route('school') . '/login';
         }
         
-        // Otherwise, redirect to global login
-        return route('login');
+        // No school context - redirect to home page
+        // This should only happen for Super Admin routes without tenant context
+        return '/';
     }
 }

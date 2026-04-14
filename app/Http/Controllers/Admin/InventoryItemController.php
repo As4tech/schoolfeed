@@ -48,13 +48,13 @@ class InventoryItemController extends Controller
         return redirect()->route('admin.inventory.items.index')->with('success', 'Item created.');
     }
 
-    public function edit(InventoryItem $item)
+    public function edit($school, InventoryItem $item)
     {
         $this->authorizeItem($item);
         return view('admin.inventory.items.edit', compact('item'));
     }
 
-    public function update(Request $request, InventoryItem $item)
+    public function update(Request $request, $school, InventoryItem $item)
     {
         $this->authorizeItem($item);
         $validated = $request->validate([
@@ -66,7 +66,7 @@ class InventoryItemController extends Controller
         return redirect()->route('admin.inventory.items.index')->with('success', 'Item updated.');
     }
 
-    public function destroy(InventoryItem $item)
+    public function destroy($school, InventoryItem $item)
     {
         $this->authorizeItem($item);
         $item->delete();
